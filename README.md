@@ -338,6 +338,71 @@ function DiscordLib:Window(text)
 		end
 	)
 	
+	CloseBtn.Name = "CloseBtn"
+CloseBtn.Parent = TopFrame
+CloseBtn.BackgroundColor3 = Color3.fromRGB(32, 34, 37)
+CloseBtn.BackgroundTransparency = 0
+CloseBtn.Position = UDim2.new(0.186344236, 0, 0.239436626, 0)
+CloseBtn.Size = UDim2.new(0, 28, 0, 22)
+CloseBtn.Font = Enum.Font.Gotham
+CloseBtn.Text = "PANDA"
+CloseBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+CloseBtn.TextSize = 14.000
+CloseBtn.BorderSizePixel = 0
+CloseBtn.AutoButtonColor = false
+CloseBtn.MouseButton1Click:Connect(
+    function()
+        MainFrame:TweenSize(UDim2.new(0, 0, 0, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .3, true)
+    end
+)
+
+CloseBtn.MouseEnter:Connect(
+    function()
+        CloseBtn.BackgroundColor3 = Color3.fromRGB(240, 71, 71)
+    end
+)
+
+CloseBtn.MouseLeave:Connect(
+    function()
+        CloseBtn.BackgroundColor3 = Color3.fromRGB(32, 34, 37)
+    end
+)
+
+MinimizeBtn.MouseEnter:Connect(
+    function()
+        MinimizeBtn.BackgroundColor3 = Color3.fromRGB(40, 43, 46)
+    end
+)
+
+MinimizeBtn.MouseLeave:Connect(
+    function()
+        MinimizeBtn.BackgroundColor3 = Color3.fromRGB(32, 34, 37)
+    end
+)
+
+MinimizeBtn.MouseButton1Click:Connect(
+    function()
+        if minimized == false then
+            MainFrame:TweenSize(
+                UDim2.new(0, 681, 0, 22),
+                Enum.EasingDirection.Out,
+                Enum.EasingStyle.Quart,
+                .3,
+                true
+            )
+        else
+            MainFrame:TweenSize(
+                UDim2.new(0, 681, 0, 396),
+                Enum.EasingDirection.Out,
+                Enum.EasingStyle.Quart,
+                .3,
+                true
+            )
+        end
+        minimized = not minimized
+    end
+)
+	
 	local SettingsOpenBtn = Instance.new("TextButton")
 	local SettingsOpenBtnIco = Instance.new("ImageLabel")
 	
