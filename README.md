@@ -338,70 +338,100 @@ function DiscordLib:Window(text)
 		end
 	)
 	
-	CloseBtn.Name = "CloseBtn"
-CloseBtn.Parent = TopFrame
-CloseBtn.BackgroundColor3 = Color3.fromRGB(32, 34, 37)
-CloseBtn.BackgroundTransparency = 0
-CloseBtn.Position = UDim2.new(0.186344236, 0, 0.239436626, 0)
-CloseBtn.Size = UDim2.new(0, 28, 0, 22)
-CloseBtn.Font = Enum.Font.Gotham
-CloseBtn.Text = "PANDA"
-CloseBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-CloseBtn.TextSize = 14.000
-CloseBtn.BorderSizePixel = 0
-CloseBtn.AutoButtonColor = false
-CloseBtn.MouseButton1Click:Connect(
-    function()
-        MainFrame:TweenSize(UDim2.new(0, 0, 0, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .3, true)
-    end
-)
 
-CloseBtn.MouseEnter:Connect(
-    function()
-        CloseBtn.BackgroundColor3 = Color3.fromRGB(240, 71, 71)
-    end
-)
 
-CloseBtn.MouseLeave:Connect(
-    function()
-        CloseBtn.BackgroundColor3 = Color3.fromRGB(32, 34, 37)
-    end
-)
+	CloseSettingsBtn.Name = "CloseSettingsBtn"
+	CloseSettingsBtn.Parent = SettingsHolder
+	CloseSettingsBtn.AnchorPoint = Vector2.new(0.5, 0.5)
+	CloseSettingsBtn.BackgroundColor3 = Color3.fromRGB(113, 117, 123)
+	CloseSettingsBtn.Position = UDim2.new(0.120833337, 0, 0.0952890813, 0)
+	CloseSettingsBtn.Selectable = false
+	CloseSettingsBtn.Size = UDim2.new(0, 30, 0, 30)
+	CloseSettingsBtn.AutoButtonColor = false
+	CloseSettingsBtn.Font = Enum.Font.SourceSans
+	CloseSettingsBtn.Text = ""
+	CloseSettingsBtn.TextColor3 = Color3.fromRGB(0, 0, 0)
+	CloseSettingsBtn.TextSize = 14.000
 
-MinimizeBtn.MouseEnter:Connect(
-    function()
-        MinimizeBtn.BackgroundColor3 = Color3.fromRGB(40, 43, 46)
-    end
-)
+	CloseSettingsBtnCorner.CornerRadius = UDim.new(1, 0)
+	CloseSettingsBtnCorner.Name = "CloseSettingsBtnCorner"
+	CloseSettingsBtnCorner.Parent = CloseSettingsBtn
 
-MinimizeBtn.MouseLeave:Connect(
-    function()
-        MinimizeBtn.BackgroundColor3 = Color3.fromRGB(32, 34, 37)
-    end
-)
+	CloseSettingsBtnCircle.Name = "CloseSettingsBtnCircle"
+	CloseSettingsBtnCircle.Parent = CloseSettingsBtn
+	CloseSettingsBtnCircle.BackgroundColor3 = Color3.fromRGB(54, 57, 63)
+	CloseSettingsBtnCircle.Position = UDim2.new(0.120833337, 0, 0.0952890813, 0)
+	CloseSettingsBtnCircle.Size = UDim2.new(0, 24, 0, 24)
 
-MinimizeBtn.MouseButton1Click:Connect(
-    function()
-        if minimized == false then
-            MainFrame:TweenSize(
-                UDim2.new(0, 681, 0, 22),
-                Enum.EasingDirection.Out,
-                Enum.EasingStyle.Quart,
-                .3,
-                true
-            )
-        else
-            MainFrame:TweenSize(
-                UDim2.new(0, 681, 0, 396),
-                Enum.EasingDirection.Out,
-                Enum.EasingStyle.Quart,
-                .3,
-                true
-            )
-        end
-        minimized = not minimized
-    end
-)
+	CloseSettingsBtnCircleCorner.CornerRadius = UDim.new(1, 0)
+	CloseSettingsBtnCircleCorner.Name = "CloseSettingsBtnCircleCorner"
+	CloseSettingsBtnCircleCorner.Parent = CloseSettingsBtnCircle
+
+	CloseSettingsBtnIcon.Name = "CloseSettingsBtnIcon"
+	CloseSettingsBtnIcon.Parent = CloseSettingsBtnCircle
+	CloseSettingsBtnIcon.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	CloseSettingsBtnIcon.BackgroundTransparency = 1.000
+	CloseSettingsBtnIcon.Position = UDim2.new(0, 2, 0, 2)
+	CloseSettingsBtnIcon.Size = UDim2.new(0, 19, 0, 19)
+	CloseSettingsBtnIcon.Image = "http://www.roblox.com/asset/?id=6035047409"
+	CloseSettingsBtnIcon.ImageColor3 = Color3.fromRGB(222, 222, 222)
+	
+	CloseSettingsBtn.MouseButton1Click:Connect(function()
+		settingsopened = false
+		TopFrameHolder.Visible = true
+		ServersHoldFrame.Visible = true
+		SettingsHolder:TweenSize(UDim2.new(0, 0, 0, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .3, true)
+		TweenService:Create(
+			Settings,
+			TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+			{BackgroundTransparency = 1}
+		):Play()
+		for i,v in next, SettingsHolder:GetChildren() do
+			TweenService:Create(
+				v,
+				TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+				{BackgroundTransparency = 1}
+			):Play()
+		end
+		wait(.3)
+		SettingsFrame.Visible = false
+	end)
+	
+	CloseSettingsBtn.MouseEnter:Connect(function()
+		CloseSettingsBtnCircle.BackgroundColor3 = Color3.fromRGB(72,76,82)
+	end)
+
+	CloseSettingsBtn.MouseLeave:Connect(function()
+		CloseSettingsBtnCircle.BackgroundColor3 = Color3.fromRGB(54, 57, 63)
+	end)
+	
+	UserInputService.InputBegan:Connect(
+		function(io, p)
+			if io.KeyCode == Enum.KeyCode.RightControl then
+				if settingsopened == true then
+					settingsopened = false
+					TopFrameHolder.Visible = true
+					ServersHoldFrame.Visible = true
+					SettingsHolder:TweenSize(UDim2.new(0, 0, 0, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, .3, true)
+					TweenService:Create(
+						Settings,
+						TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+						{BackgroundTransparency = 1}
+					):Play()
+					for i,v in next, SettingsHolder:GetChildren() do
+						TweenService:Create(
+							v,
+							TweenInfo.new(.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+							{BackgroundTransparency = 1}
+						):Play()
+					end
+					wait(.3)
+					SettingsFrame.Visible = false
+				end
+			end
+		end
+	)
+
 	
 	local SettingsOpenBtn = Instance.new("TextButton")
 	local SettingsOpenBtnIco = Instance.new("ImageLabel")
